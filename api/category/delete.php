@@ -6,18 +6,18 @@ header('Access-Control-Allow-Methods: DELETE');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 // initializing our api
-include_once('../core/initialized.php');
+include_once('../../core/initialized.php');
 
-// instantiate post 
-$post = new Post($pdo);
+// instantiate category 
+$category = new Category($pdo);
 
 $data = json_decode(file_get_contents("php://input"));
-$post->id = $data->id;
+$category->id = $data->id;
 
 
-// update the post
-if ($post->delete()) {
-    echo json_encode(['message' => 'Post Deleted']);
+// update the Category
+if ($category->delete()) {
+    echo json_encode(['message' => 'Category Deleted']);
 } else {
-    echo json_encode(['message' => 'Post not deleted']);
+    echo json_encode(['message' => 'Category not deleted']);
 }

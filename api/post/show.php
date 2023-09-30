@@ -4,13 +4,13 @@ header('Access-Control-Allow-Origin:*');
 header('Content-Type: application/json');
 
 // initializing our api
-include_once('../core/initialized.php');
+include_once('../../core/initialized.php');
 
 // instantiate post 
 $post = new Post($pdo);
 
 $post->id = isset($_GET['id']) ? $_GET['id'] : die();
-$post->read_single();
+$post->show();
 
 $post_arr = [
     'id' => $post->id,

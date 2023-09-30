@@ -21,7 +21,7 @@ class Post
     }
 
     // getting posts from db
-    public function read()
+    public function index()
     {
         $query = 'SELECT c.name as category_name, p.id, p.category_id, p.title, p.body, p.author, p.created_at FROM ' . $this->table . ' p LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.created_at DESC';
         // prepare statement
@@ -29,7 +29,7 @@ class Post
         $stmt->execute();
         return $stmt;
     }
-    public function read_single()
+    public function show()
     {
         $query = 'SELECT c.name as category_name, p.id, p.category_id, p.title, p.body, p.author, p.created_at FROM ' . $this->table . ' p LEFT JOIN categories c ON p.category_id = c.id WHERE p.id = ? LIMIT 1';
         // prepare statement

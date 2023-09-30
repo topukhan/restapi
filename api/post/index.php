@@ -4,13 +4,13 @@ header('Access-Control-Allow-Origin:*');
 header('Content-Type: application/json');
 
 // initializing our api
-include_once('../core/initialized.php');
+include_once('../../core/initialized.php');
 
 // instantiate post 
 $post = new Post($pdo);
 
 // blog post query 
-$result = $post->read();
+$result = $post->index();
 // get the row count
 $num = $result->rowCount();
 
@@ -32,7 +32,6 @@ if ($num > 0) {
     }
     // convert to JSON and output
     echo json_encode($post_arr);
-}
-else{
+} else {
     echo json_encode(["message" => "No Posts Found"]);
 }
