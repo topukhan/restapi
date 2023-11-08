@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>category</title>
+    <title>Category</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .card {
@@ -80,32 +80,64 @@
             <h3>Category Create</h3>
         </div>
         <div class="card-body">
-            <div class="card p-3" style="width: 500px;   ">
+        <span id="successMessage" class="text-success fs-4"></span>
+            <div class="card p-3" style="width: 500px;">
                 <div class="card-body">
                     <div style="display: flex;">
-                        <label style="margin-right: 10px; align-self: center; font-weight: bold; " for="Name">Name:</label>
-                        <input class="form-control" type="text" placeholder="Example: Kids">
+                        <form id="createCategoryForm" style="display: inline-block; display: flex; align-items: center;">
+                            <label style="margin-right: 10px; font-weight: bold;" for="Name">Name:</label>
+                            <input class="form-control" id="categoryName" name="name" type="text" placeholder="Example: Kids">
 
-                        <button class="btn" style=" background-color:#198754; color: white; margin-left: 10px;">
-                            <a href="create.html">Create</a>
-                        </button>
-                        <button class="btn btn-dark" style="  margin-left: 10px;">
-                            <a href="./index.php">Back</a>
-                        </button>
+                            <button class="btn" type="submit" style="background-color:#198754; color: white; margin-left: 10px;">
+                                Create
+                            </button>
+                            <button class="btn btn-dark" style="margin-left: 10px;">
+                                <a href="./index.php">Back</a>
+                            </button>
+                        </form>
 
                     </div>
-
+                    
                 </div>
-
-
-
             </div>
-
+            
         </div>
     </div>
 
+    <script>
+        document.getElementById('createCategoryForm').addEventListener('submit', function(event) {
+            event.preventDefault()
 
+            const categoryName = document.getElementById('categoryName').value
 
+            const data = {
+                name: categoryName,
+            }
+            console.log(data)
+            const currentPath = window.location.pathname;
+            const pathSegments = currentPath.split('/');
+            // The project folder name is likely the first segment after the domain (index 1)
+            const projectFolderName = pathSegments[1];
+
+            const createApiUrl = `http://localhost/${projectFolderName}/api/category/create.php`
+
+            fetch(createApiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const successMessage = data.message;
+                    document.getElementById('successMessage').textContent = successMessage;
+                })
+
+                .catch(error => console.log("Error:", error))
+        })
+    </script>
 </body>
 
 </html>
