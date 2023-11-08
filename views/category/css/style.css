@@ -1,0 +1,53 @@
+nav {
+    margin-top: 20px;
+    display: flex;
+}
+
+.main-div {
+    padding: 30px;
+}
+
+.search {
+    display: flex;
+}
+
+.search input {
+    margin-right: 3px;
+}
+
+nav:nth-child(1) button {
+    margin-left: 3px;
+
+}
+
+th {
+    color: white;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+.create {
+    height: 40px;
+    width: 40px;
+    background-color: black;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 100%;
+    color: white;
+    font-size: 20px;
+    margin-top: 40px;
+}
+a:hover{
+    color: white;
+    
+}
+.card {
+        box-shadow: 14px 17px 31px -10px rgba(86, 69, 69, 0.75);
+        -webkit-box-shadow: 14px 17px 31px -10px rgba(86, 69, 69, 0.75);
+        -moz-box-shadow: 14px 17px 31px -10px rgba(86, 69, 69, 0.75);
+       
+
+    }
