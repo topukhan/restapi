@@ -19,12 +19,14 @@ class Category
     // getting categories from db
     public function index()
     {
-        $query = 'SELECT * FROM ' . $this->table . '  ORDER BY created_at DESC';
+        $query = 'SELECT * FROM ' . $this->table . '  ORDER BY id DESC';
         // prepare statement
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
     }
+
+
     public function show()
     {
         $query = 'SELECT * FROM ' . $this->table . '  WHERE id = :id LIMIT 1';

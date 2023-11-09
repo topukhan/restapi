@@ -75,36 +75,109 @@
 </head>
 
 <body>
-    <div class="card">
-        <div class="card-header">
-            <h3>Category Edit</h3>
-        </div>
-        <div class="card-body">
-            <div class="card p-3" style="width: 500px;   ">
-                <div class="card-body">
-                    <div style="display: flex;">
-                        <label style="margin-right: 10px; align-self: center; font-weight: bold; " for="Name">Name:</label>
-                        <input class="form-control" type="text">
+    <div>
+        <h1 class="text-center bg-success text-white p-2">Edit Category</h1>
+    </div>
+    <div class="main-div">
+        <div class="card mt-4">
+            <div class="card-body">
+                <h2>Edit Category</h2>
+                <div class="card p-3" style="width: 500px;">
+                    <span id="successMessage" class="text-success fs-6"></span>
+                    <div class="card-body">
+                        <div style="display: flex;">
+                            <label style="margin-right: 10px; align-self: center; font-weight: bold;" for="Name">Name:</label>
+                            <input id="categoryName" class="form-control" type="text">
 
-                        <button class="btn" style=" background-color:#198754; color: white; margin-left: 10px;">
-                            <a href="create.html">Update</a>
-                        </button>
-                        <button class="btn btn-dark" style="  margin-left: 10px;">
-                            <a href="./index.php">Back</a>
-                        </button>
-
+                            <button id="updateCategoryBtn" class="btn" style="background-color:#198754; color: white; margin-left: 10px;">
+                                Update
+                            </button>
+                            <button class="btn btn-dark" style="margin-left: 10px;">
+                                <a href="./index.php">Back</a>
+                            </button>
+                        </div>
                     </div>
-
                 </div>
-
-
-
             </div>
-
         </div>
     </div>
 
+    <script>
+        const categoryNameInput = document.getElementById('categoryName');
+        const updateCategoryBtn = document.getElementById('updateCategoryBtn');
 
+        // Function to extract the category ID from the URL
+        function getCategoryIdFromUrl() {
+            const searchParams = new URLSearchParams(window.location.search);
+            return searchParams.get('id');
+        }
+
+        const categoryId = getCategoryIdFromUrl();
+        if (categoryId) {
+            // Fetch existing category data based on the category ID from your API
+            const currentPath = window.location.pathname;
+            const pathSegments = currentPath.split('/');
+            const projectFolderName = pathSegments[1];
+
+            const showApiUrl = `http://localhost/${projectFolderName}/api/category/show.php?id=${categoryId}`
+            fetch(showApiUrl)
+                .then(response => response.json())
+                .then(categoryData => {
+                    if (categoryData.id) {
+                        categoryNameInput.value = categoryData.name;
+                    } else {
+                        categoryNameInput.value = "Category not found";
+                        categoryNameInput.disabled = true; // Disable input field if category is not found
+                        updateCategoryBtn.disabled = true; // Disable the update button
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    categoryNameInput.value = "Something went wrong.";
+                    categoryNameInput.disabled = true; // Disable input field in case of an error
+                    updateCategoryBtn.disabled = true; // Disable the update button
+                });
+        } else {
+            categoryNameInput.value = "Category ID not provided in the URL";
+            categoryNameInput.disabled = true; // Disable input field if category ID is missing
+            updateCategoryBtn.disabled = true; // Disable the update button
+        }
+
+        // Event listener for updating the category
+        updateCategoryBtn.addEventListener('click', () => {
+            const updatedName = categoryNameInput.value;
+            if (updatedName) {
+                // Send a PUT request to update the category data using your API
+                const currentPath = window.location.pathname;
+                const pathSegments = currentPath.split('/');
+                const projectFolderName = pathSegments[1];
+
+                const showApiUrl = `http://localhost/${projectFolderName}/api/category/update.php?id=${categoryId}`
+                fetch(showApiUrl, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            id: categoryId,
+                            name: updatedName
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.message) {
+                            const successMessage = data.message;
+                            document.getElementById('successMessage').textContent = successMessage;
+                        } else {
+                            alert("Category update failed. Please try again.");
+                        }
+                    })
+                    .catch(error => console.error("Error:", error, "  'Check API URL'"));
+            } else {
+                alert("Please enter a valid category name.");
+            }
+        });
+    </script>
 
 </body>
 

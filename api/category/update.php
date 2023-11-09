@@ -11,14 +11,15 @@ include_once('../../core/initialized.php');
 // instantiate category 
 $category = new Category($pdo);
 
+$id = $_GET['id'];
 // get raw category data 
 $data = json_decode(file_get_contents("php://input"));
-$category->id = $data->id;
+$category->id = $id;
 $category->name = $data->name;
 
 // update the category
 if ($category->update()) {
-    echo json_encode(['message' => 'Category Updated']);
+    echo json_encode(['message' => 'Category Updated Successfully']);
 } else {
     echo json_encode(['message' => 'Category not updated']);
 }

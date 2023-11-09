@@ -16,7 +16,7 @@ $data = json_decode(file_get_contents("php://input"));
 $category->name = $data->name;
 // create the category
 if ($category->create()) {
-    echo json_encode(['message' => 'Category Created']);
+    echo json_encode(['message' => 'Category Created Successfully']);
 } else {
     echo json_encode(['message' => 'Category not Created']);
 }

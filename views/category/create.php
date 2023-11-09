@@ -80,7 +80,7 @@
             <h3>Category Create</h3>
         </div>
         <div class="card-body">
-        <span id="successMessage" class="text-success fs-4"></span>
+        <span id="successMessage" class="text-success fs-6"></span>
             <div class="card p-3" style="width: 500px;">
                 <div class="card-body">
                     <div style="display: flex;">
