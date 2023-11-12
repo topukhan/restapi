@@ -22,7 +22,7 @@ cd restapi
 
 ## Server Configuration
 
-1. Ensure that your XAMPP or similar stack is installed and running.
+1. Ensure that your Laragon is installed and running. (Currently run only with laragon)
 2. Start Apache and MySQL servers.
 
 ## Accessing the API Views
