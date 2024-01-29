@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Category</title>
+    <title>Category Show</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .card {
@@ -75,43 +75,44 @@
 
 
     <script>
-        // Function to extract the player's ID from the URL
+        // Function to extract the Category's ID from the URL
         function getCategoryIdFromUrl() {
             const searchParams = new URLSearchParams(window.location.search);
             return searchParams.get('id');
         }
 
-        const playerNameElement = document.getElementById('categoryName');
+        const categoryNameElement = document.getElementById('categoryName');
         const backButton = document.querySelector('.btn-dark');
 
         const categoryId = getCategoryIdFromUrl();
         if (categoryId) {
-            // Fetch player data based on the player ID from your API
+            // Fetch Category data based on the Category ID from your API
             const currentPath = window.location.pathname;
             const pathSegments = currentPath.split('/');
             const projectFolderName = pathSegments[1];
 
-            const listApiUrl = `http://localhost/${projectFolderName}/api/category/show.php?id=${categoryId}`
-            fetch(listApiUrl)
+            const showApiUrl = `http://localhost/${projectFolderName}/api/category/show.php?id=${categoryId}`
+            fetch(showApiUrl)
                 .then(response => response.json())
-                .then(playerData => {
-                    if (playerData.name) {
-                        playerNameElement.textContent = playerData.name;
+                .then(categoryData => {
+                    if (categoryData.name) {
+                        categoryNameElement.textContent = categoryData.name;
                     } else {
-                        playerNameElement.textContent = "Player not found";
+                        categoryNameElement.textContent = "Category not found";
                     }
                 })
                 .catch(error => {
                     console.error("Error:", error);
-                    playerNameElement.textContent = "Something went wrong. Please try again later.";
+                    categoryNameElement.textContent = "Something went wrong. Please try again later.";
                 });
         } else {
-            playerNameElement.textContent = "Player ID not provided in the URL";
+            categoryNameElement.textContent = "Category ID not provided in the URL";
         }
 
-        // Add an event listener to the Back button to navigate back to the player list
-        backButton.addEventListener('click', () => {
-            window.location.href = './index.php'; // Adjust the URL as needed
+        // Add an event listener to the Back button to navigate back to the Category list
+        backButton.addEventListener('click', (event) => {
+            event.preventDefault() // testing purposes only
+            window.location.href = './index.php' 
         });
     </script>
 </body>

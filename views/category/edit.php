@@ -108,8 +108,8 @@
 
         // Function to extract the category ID from the URL
         function getCategoryIdFromUrl() {
-            const searchParams = new URLSearchParams(window.location.search);
-            return searchParams.get('id');
+            const searchParams = new URLSearchParams(window.location.search); //.search retrieves the query string portion
+            return searchParams.get('id'); // it parses the query string into a manageable format
         }
 
         const categoryId = getCategoryIdFromUrl();
@@ -121,7 +121,7 @@
 
             const showApiUrl = `http://localhost/${projectFolderName}/api/category/show.php?id=${categoryId}`
             fetch(showApiUrl)
-                .then(response => response.json())
+                .then(response => response.json()) //It converts the JSON-formatted response body into a JavaScript object
                 .then(categoryData => {
                     if (categoryData.id) {
                         categoryNameInput.value = categoryData.name;
@@ -133,12 +133,12 @@
                 })
                 .catch(error => {
                     console.error("Error:", error);
-                    categoryNameInput.value = "Something went wrong.";
+                    categoryNameInput.value = "Category not found.";
                     categoryNameInput.disabled = true; // Disable input field in case of an error
                     updateCategoryBtn.disabled = true; // Disable the update button
                 });
         } else {
-            categoryNameInput.value = "Category ID not provided in the URL";
+            categoryNameInput.value = "Please provide id in the URL";
             categoryNameInput.disabled = true; // Disable input field if category ID is missing
             updateCategoryBtn.disabled = true; // Disable the update button
         }
@@ -152,8 +152,8 @@
                 const pathSegments = currentPath.split('/');
                 const projectFolderName = pathSegments[1];
 
-                const showApiUrl = `http://localhost/${projectFolderName}/api/category/update.php?id=${categoryId}`
-                fetch(showApiUrl, {
+                const updateApiUrl = `http://localhost/${projectFolderName}/api/category/update.php?id=${categoryId}`
+                fetch(updateApiUrl, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
